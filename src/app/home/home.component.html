@@ -1,6 +1,6 @@
 <div class="sidebar">
   <nav>
-    <button #autocompleteButton (click)="scrollToCenter(autocompleteButton)">Autocomplete</button>
+    <button #autocompleteButton (click)="displayContent('autocomplete')">Autocomplete</button>
     <a routerLink="/Button" routerLinkActive="active">Button</a>
     <a routerLink="/Checkbox Group" routerLinkActive="active">Checkbox Group</a>
     <a routerLink="/Date Field" routerLinkActive="active">Date Field</a>
@@ -14,5 +14,11 @@
     <a routerLink="/Date Field" routerLinkActive="active">Text Field</a>
      <a routerLink="/Date Field" routerLinkActive="active">Text area</a>
   </nav>
+</div>
+
+<!-- Main Content Area -->
+<div class="main-content">
+  <app-autocomplete *ngIf="selectedContent === 'autocomplete'"></app-autocomplete>
+ 
 </div>
 
