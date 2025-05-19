@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPencil, faXmark } from '@fortawesome/free-solid-svg-icons'; 
+import { FormDataService } from '../form-data.service';
 
 
 @Component({
@@ -14,23 +15,9 @@ import { faPencil, faXmark } from '@fortawesome/free-solid-svg-icons';
 export class AutocompleteComponent {
 faXmark = faXmark; 
 faPencil = faPencil;
-  formModel = {
-    autocomplete: '',
-    required: false,
-    label: '',
-    helpText: '',
-    placeholder: '',
-    className: '',
-    name: '',
-    access: false,
-    roles: {
-      admin: false,
-      editor: false,
-      viewer: false,
-    }
-  };
-  onSubmit() {
-    console.log('Form submitted:', this.formModel);
-  }
+  constructor(private formDataService: FormDataService ) {}
+
+  
+  
 
 }
