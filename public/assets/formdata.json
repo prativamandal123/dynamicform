@@ -1,15 +1,19 @@
-formModel = {
-    autocomplete: '',
-    required: false,
-    label: '',
-    helpText: '',
-    placeholder: '',
-    className: '',
-    name: '',
-    access: false,
-    roles: {
-      admin: false,
-      editor: false,
-      viewer: false,
+{
+  "formModel": [
+    {
+      "autocomplete": "",
+      "required": false,
+      "label": "",
+      "helpText": "",
+      "placeholder": "",
+      "className": "",
+      "name": "",
+      "access": false,
+      "roles": {
+        "admin": false,
+        "editor": false,
+        "viewer": false
+      }
     }
-  };
+  ]
+}
