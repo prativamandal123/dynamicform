@@ -1,14 +1,101 @@
-
-<div class="container mt-4 me-2">
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <label for="autocompleteInput" class="form-label">Autocomplete</label>
-            <div class="input-group">
-                <span class="input-group-text">
-                    <i class="bi bi-search"></i> <!-- Bootstrap icon -->
-                </span>
-                <input type="text" class="form-control" id="autocompleteInput" placeholder="Type to search...">
-            </div>
-        </div>
+<div class="container me-4">
+  <!-- Autocomplete Section: Label above input, icons to the right -->
+  <div class="mb-3">
+    <div>
+        <label for="autocompleteInput" class="form-label">Autocomplete</label>
+    <button type="button" (click)="toggleForm('open')" class="btn btn-outline-secondary me-2">
+        <fa-icon [icon]="faPencil"></fa-icon>
+      </button>
+      <!-- Cross Icon: Hides additional form fields -->
+      <button type="button" (click)="toggleForm('close')" class="btn btn-outline-secondary">
+        <fa-icon [icon]="faXmark"></fa-icon>
+      </button>
     </div>
+    <div class="d-flex align-items-center">
+      <input type="text" class="form-control me-2" id="autocompleteInput"
+             placeholder="Start typing..."
+             [(ngModel)]="formModel.autocomplete" name="autocomplete">
+      <!-- Pencil Icon: Shows additional form fields -->
+      
+    </div>
+  </div>
+
+  <!-- Additional Form Fields: Visible when showForm is true -->
+  <form *ngIf="showForm" (ngSubmit)="onSubmit()" #form="ngForm" class="container mt-4">
+    <!-- Required Checkbox -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-check mt-4">
+          <input class="form-check-input" type="checkbox" id="requiredCheckbox"
+                 [(ngModel)]="formModel.required" name="required">
+          <label class="form-check-label" for="requiredCheckbox">Required</label>
+        </div>
+
+        <!-- Label -->
+        <div class="mt-3">
+          <label for="labelInput" class="form-label">Label</label>
+          <input type="text" class="form-control" id="labelInput"
+                 [(ngModel)]="formModel.label" name="label">
+        </div>
+
+        <!-- Help Text -->
+        <div class="mt-3">
+          <label for="helpTextInput" class="form-label">Help Text</label>
+          <input type="text" class="form-control" id="helpTextInput"
+                 [(ngModel)]="formModel.helpText" name="helpText">
+        </div>
+
+        <!-- Placeholder -->
+        <div class="mt-3">
+          <label for="placeholderInput" class="form-label">Placeholder</label>
+          <input type="text" class="form-control" id="placeholderInput"
+                 [(ngModel)]="formModel.placeholder" name="placeholder">
+        </div>
+
+        <!-- Class -->
+        <div class="mt-3">
+          <label for="classInput" class="form-label">Class</label>
+          <input type="text" class="form-control" id="classInput"
+                 [(ngModel)]="formModel.className" name="className">
+        </div>
+
+        <!-- Name -->
+        <div class="mt-3">
+          <label for="nameInput" class="form-label">Name</label>
+          <input type="text" class="form-control" id="nameInput"
+                 [(ngModel)]="formModel.name" name="name">
+        </div>
+
+        <!-- Access Checkbox -->
+        <div class="form-check mt-4">
+          <input class="form-check-input" type="checkbox" id="accessCheckbox"
+                 [(ngModel)]="formModel.access" name="access">
+          <label class="form-check-label" for="accessCheckbox">Access</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Roles -->
+    <div class="mt-4">
+      <h5>Limit access to one or more of the following roles:</h5>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="roleAdmin"
+               [(ngModel)]="formModel.roles.admin" name="roleAdmin">
+        <label class="form-check-label" for="roleAdmin">Admin</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="roleEditor"
+               [(ngModel)]="formModel.roles.editor" name="roleEditor">
+        <label class="form-check-label" for="roleEditor">Editor</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="roleViewer"
+               [(ngModel)]="formModel.roles.viewer" name="roleViewer">
+        <label class="form-check-label" for="roleViewer">Viewer</label>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary mt-4">Submit</button>
+  </form>
 </div>
