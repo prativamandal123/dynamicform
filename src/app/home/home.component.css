@@ -26,3 +26,26 @@
   background-color: #495057;
   padding-left: 10px;
 }
+/* home.component.css */
+.palette-item {
+  background: #e3f2fd;
+  padding: 8px;
+  margin: 4px 0;
+  border: 1px solid #ccc;
+  cursor: move;
+}
+
+.builder-area {
+  border: 2px dashed #90caf9;
+  min-height: 200px;
+  padding: 16px;
+  background: #f1f8ff;
+}
+
+.form-field {
+  background: #c8e6c9;
+  padding: 8px;
+  margin: 4px 0;
+  border: 1px solid #388e3c;
+}
+

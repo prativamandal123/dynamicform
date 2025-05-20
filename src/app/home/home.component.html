@@ -1,24 +1,75 @@
-<div class="sidebar">
-  <nav>
-    <button #autocompleteButton (click)="displayContent('autocomplete')">Autocomplete</button>
-    <a routerLink="/Button" routerLinkActive="active">Button</a>
-    <a routerLink="/Checkbox Group" routerLinkActive="active">Checkbox Group</a>
-    <a routerLink="/Date Field" routerLinkActive="active">Date Field</a>
-    <a routerLink="/Autocomplete" routerLinkActive="active">File Upload</a>
-    <a routerLink="/Button" routerLinkActive="active">Header</a>
-    <a routerLink="/Checkbox Group" routerLinkActive="active">Hidden Input</a>
-    <a routerLink="/Date Field" routerLinkActive="active">Number</a>
-    <a routerLink="/Date Field" routerLinkActive="active">Paragraph</a>
-    <a routerLink="/Date Field" routerLinkActive="active">Radio Group</a>
-     <a routerLink="/Date Field" routerLinkActive="active">Select</a>
-    <a routerLink="/Date Field" routerLinkActive="active">Text Field</a>
-     <a routerLink="/Date Field" routerLinkActive="active">Text area</a>
-  </nav>
-</div>
+<div class="container-fluid">
+  <div class="row vh-100">
+    <!-- Sidebar -->
+    <div class="col-12 col-md-3 col-lg-2 bg-light border-end p-3 overflow-auto">
+      <nav>
+        <h5 class="mb-3">Field Palette</h5>
+        <div
+          cdkDropList
+          [cdkDropListData]="[]"
+          [cdkDropListConnectedTo]="['formBuilder']"
+          cdkDropListSortingDisabled="true"
+          class="d-flex flex-column gap-2 mb-4"
+        >
+          <div
+            *ngFor="let field of fieldPalette; trackBy: trackByFieldPalette"
+            cdkDrag
+            [cdkDragData]="field"
+            (click)="displayContent(field.type)"
+            class="btn btn-outline-primary text-start"
+          >
+            {{ field.label }}
+          </div>
+        </div>
 
-<!-- Main Content Area -->
-<div class="main-content">
-  <app-autocomplete *ngIf="selectedContent === 'autocomplete'"></app-autocomplete>
- 
-</div>
+        <h6 class="mb-2">Components</h6>
+        <div class="nav flex-column">
+          <a class="nav-link" routerLink="/Button" routerLinkActive="active">Button</a>
+          <a class="nav-link" routerLink="/Checkbox Group" routerLinkActive="active">Checkbox Group</a>
+          <a class="nav-link" routerLink="/Date Field" routerLinkActive="active">Date Field</a>
+          <a class="nav-link" routerLink="/Autocomplete" routerLinkActive="active">File Upload</a>
+          <a class="nav-link" routerLink="/Button" routerLinkActive="active">Header</a>
+          <a class="nav-link" routerLink="/Checkbox Group" routerLinkActive="active">Hidden Input</a>
+          <a class="nav-link" routerLink="/Date Field" routerLinkActive="active">Number</a>
+          <a class="nav-link" routerLink="/Date Field" routerLinkActive="active">Paragraph</a>
+          <a class="nav-link" routerLink="/Date Field" routerLinkActive="active">Radio Group</a>
+          <a class="nav-link" routerLink="/Date Field" routerLinkActive="active">Select</a>
+          <a class="nav-link" routerLink="/Date Field" routerLinkActive="active">Text Field</a>
+          <a class="nav-link" routerLink="/Date Field" routerLinkActive="active">Text Area</a>
+        </div>
+      </nav>
+    </div>
 
+    <!-- Main Content -->
+    <div class="col bg-white p-4 overflow-auto">
+      <!-- Dynamic Component Display -->
+      <section *ngIf="selectedContent === 'autocomplete'" class="mb-4">
+        <app-autocomplete></app-autocomplete>
+      </section>
+
+      <hr />
+
+      <!-- Form Builder Area -->
+      <section
+        cdkDropList
+        id="formBuilder"
+        [cdkDropListData]="formFields"
+        (cdkDropListDropped)="onDropInRow($event)"
+        class="border border-primary-subtle rounded p-3 mt-3"
+        style="min-height: 300px;"
+      >
+        <h5 class="text-primary mb-3">Form Builder</h5>
+        <div class="d-flex flex-wrap gap-3">
+          <div
+            *ngFor="let field of formFields; trackBy: trackByFormField"
+            cdkDrag
+            class="border rounded bg-light p-2 text-center"
+            style="min-width: 150px;"
+          >
+            {{ field.label }} ({{ field.type }})
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

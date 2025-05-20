@@ -1,5 +1,6 @@
-export interface Form {
-   
+export interface FormField {
+  id: string;
+  type: any;
   autocomplete: string;
   required: boolean;
   label: string;
@@ -13,6 +14,19 @@ export interface Form {
     editor: boolean;
     viewer: boolean;
   };
+    defaultConfig:any;
+
+}
+
+export interface FormRow {
+  label: string;
+  type: any;
+  id: string;
+  formModel: FormField[];
+}
+export interface FieldType {
+  type: string;
+  label: string;
 }
 
 

@@ -6,13 +6,14 @@ import { faPencil, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FormDataService } from '../form-data.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import {DragDropModule} from '@angular/cdk/drag-drop'
 
 
 @Component({
   selector: 'app-autocomplete',
     standalone: true,  // add this if you want standalone component
 
-  imports: [CommonModule,ReactiveFormsModule,FormsModule,FontAwesomeModule,HttpClientModule],
+  imports: [CommonModule,ReactiveFormsModule,FormsModule,FontAwesomeModule,HttpClientModule,DragDropModule],
   templateUrl: './autocomplete.component.html',
   styleUrl: './autocomplete.component.css'
 })
