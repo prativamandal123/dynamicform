@@ -1,5 +1,6 @@
 <div class="container-fluid">
   <div class="row vh-100">
+    
     <!-- Sidebar -->
     <div class="col-12 col-md-3 col-lg-2 bg-light border-end p-3 overflow-auto">
       <nav>
@@ -14,195 +15,26 @@
             *ngFor="let field of fieldPalette; trackBy: trackByFieldPalette"
             cdkDrag
             [cdkDragData]="field"
-            (click)="displayContent(field.type)"
+             (click)="displayContent(field)"
             class="btn btn-outline-primary text-start"
           >
             {{ field.label }}
           </div>
         </div>
-
-        <!-- <div class="nav flex-column">
-          <a class="nav-link" routerLink="/Button" routerLinkActive="active">Button</a>
-          <a class="nav-link" routerLink="/Checkbox Group" routerLinkActive="active">Checkbox Group</a>
-          <a class="nav-link" routerLink="/Date Field" routerLinkActive="active">Date Field</a>
-          <a class="nav-link" routerLink="/Autocomplete" routerLinkActive="active">File Upload</a>
-          <a class="nav-link" routerLink="/Button" routerLinkActive="active">Header</a>
-          <a class="nav-link" routerLink="/Checkbox Group" routerLinkActive="active">Hidden Input</a>
-          <a class="nav-link" routerLink="/Date Field" routerLinkActive="active">Number</a>
-          <a class="nav-link" routerLink="/Date Field" routerLinkActive="active">Paragraph</a>
-          <a class="nav-link" routerLink="/Date Field" routerLinkActive="active">Radio Group</a>
-          <a class="nav-link" routerLink="/Date Field" routerLinkActive="active">Select</a>
-          <a class="nav-link" routerLink="/Date Field" routerLinkActive="active">Text Field</a>
-          <a class="nav-link" routerLink="/Date Field" routerLinkActive="active">Text Area</a>
-        </div> -->
       </nav>
     </div>
 
-     <div class="col bg-white p-4 overflow-auto"> 
-      <!-- Dynamic Component Display -->
-       <section *ngIf="selectedContent === 'autocomplete'" class="mb-4">
-        <app-autocomplete></app-autocomplete>
-      </section> 
+    <!-- Main Content Area -->
+    <div class="col bg-white p-4 overflow-auto">
 
-      <!-- <hr /> -->
+      <!-- Rendered Component for Selected Field -->
+     <section class="mb-4" cdkDrag>
+  <app-autocomplete></app-autocomplete>
+  <app-text-field></app-text-field>
+</section>
 
-      <!-- Form Builder Area -->
- <!-- <section
-  cdkDropList
-  id="formBuilder"
-  [cdkDropListData]="formFields"
-  (cdkDropListDropped)="onDropInRow($event)"
-  class="border border-primary-subtle rounded p-3 mt-3"
-  style="min-height: 300px;"
-   
->
-  <h5 class="text-primary mb-3">Form Builder</h5>
 
-  <div class="d-flex flex-column gap-3">
-    <div
-      *ngFor="let field of formFields; trackBy: trackByFormField"
-      cdkDrag
-      class="border rounded bg-light p-3"
-    >  -->
-      <!-- Field Header with Label + Buttons -->
-       <!-- <div class="d-flex justify-content-between align-items-center mb-2">
-        <label [attr.for]="field.id" class="form-label mb-0">{{ field.label }}</label>
-        <div>
-          <button type="button" class="btn btn-sm btn-outline-secondary me-1"(click)="toggleForm('open')">
-            <fa-icon [icon]="faPencil"></fa-icon>
-          </button>
-          <button type="button" class="btn btn-sm btn-outline-danger" (click)="toggleForm('close')">
-            <fa-icon [icon]="faXmark"></fa-icon>
-          </button>
-        </div>
-      </div>  -->
-
-      <!-- Render Input Type Conditionally -->
-       <!-- <ng-container [ngSwitch]="field.type">
-        <input
-          *ngSwitchCase="'autocomplete'"
-          type="text"
-          class="form-control"
-          [id]="field.id"
-          placeholder="Start typing..."
-          [(ngModel)]="field.value"
-          name="autocomplete"
-        />
-
-        <input
-          *ngSwitchCase="'text'"
-          type="text"
-          class="form-control"
-          [id]="field.id"
-          placeholder="Enter text"
-          [(ngModel)]="field.value"
-          name="textField"
-        />
-
-        <textarea
-          *ngSwitchCase="'textarea'"
-          class="form-control"
-          [id]="field.id"
-          placeholder="Enter text here..."
-          [(ngModel)]="field.value"
-        ></textarea>
-
-        <input
-          *ngSwitchDefault
-          type="text"
-          class="form-control"
-          [id]="field.id"
-          [(ngModel)]="field.value"
-        />
-      </ng-container>
-    </div>
-  </div>
-  <form *ngIf="showForm" (ngSubmit)="onSubmit()" #form="ngForm" class="container mt-4"> -->
-    <!-- Required Checkbox -->
-     <!-- <div class="row">
-      <div class="col-md-6">
-        <div class="form-check mt-4">
-          <input class="form-check-input" type="checkbox" id="requiredCheckbox"
-                 [(ngModel)]="formModel.required" name="required">
-          <label class="form-check-label" for="requiredCheckbox">Required</label>
-        </div>  -->
-
-        <!-- Label -->
-         <!-- <div class="mt-3">
-          <label for="labelInput" class="form-label">Label</label>
-          <input type="text" class="form-control" id="labelInput"
-                 [(ngModel)]="formModel.label" name="label">
-        </div>  -->
-
-        <!-- Help Text -->
-       <!-- <div class="mt-3">
-          <label for="helpTextInput" class="form-label">Help Text</label>
-          <input type="text" class="form-control" id="helpTextInput"
-                 [(ngModel)]="formModel.helpText" name="helpText">
-        </div>  -->
-
-        <!-- Placeholder -->
-       <!-- <div class="mt-3">
-          <label for="placeholderInput" class="form-label">Placeholder</label>
-          <input type="text" class="form-control" id="placeholderInput"
-                 [(ngModel)]="formModel.placeholder" name="placeholder">
-        </div>  -->
-
-        <!-- Class -->
-         <!-- <div class="mt-3">
-          <label for="classInput" class="form-label">Class</label>
-          <input type="text" class="form-control" id="classInput"
-                 [(ngModel)]="formModel.className" name="className">
-        </div>  -->
-
-        <!-- Name -->
-         <!-- <div class="mt-3">
-          <label for="nameInput" class="form-label">Name</label>
-          <input type="text" class="form-control" id="nameInput"
-                 [(ngModel)]="formModel.name" name="name">
-        </div>  -->
-
-        <!-- Access Checkbox -->
-         <!-- <div class="form-check mt-4">
-          <input class="form-check-input" type="checkbox" id="accessCheckbox"
-                 [(ngModel)]="formModel.access" name="access">
-          <label class="form-check-label" for="accessCheckbox">Access</label>
-        </div>
-      </div>
-    </div>  -->
-
-    <!-- Roles -->
-     <!-- <div class="mt-4">
-      <h5>Limit access to one or more of the following roles:</h5>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="roleAdmin"
-               [(ngModel)]="formModel.roles.admin" name="roleAdmin">
-        <label class="form-check-label" for="roleAdmin">Admin</label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="roleEditor"
-               [(ngModel)]="formModel.roles.editor" name="roleEditor">
-        <label class="form-check-label" for="roleEditor">Editor</label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="roleViewer"
-               [(ngModel)]="formModel.roles.viewer" name="roleViewer">
-        <label class="form-check-label" for="roleViewer">Viewer</label>
-      </div>
     </div>
 
-  </form>
-
-  <div  *ngIf="selectedContent === 'autocomplete'" class="mb-4">  -->
-     <!-- Dynamic Component Display -->
-      
-        <!-- <app-autocomplete></app-autocomplete>
-      
-
   </div>
-</section> -->
-
-
- 
-
 </div>
