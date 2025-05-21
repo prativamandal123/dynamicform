@@ -6,14 +6,14 @@ import { faPencil, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FormDataService } from '../form-data.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import {DragDropModule} from '@angular/cdk/drag-drop'
+import {CdkDragDrop, DragDropModule} from '@angular/cdk/drag-drop'
 
 
 @Component({
   selector: 'app-autocomplete',
     standalone: true,  // add this if you want standalone component
 
-  imports: [CommonModule,ReactiveFormsModule,FormsModule,FontAwesomeModule,HttpClientModule,DragDropModule],
+  imports: [CommonModule,ReactiveFormsModule,FormsModule,FontAwesomeModule,HttpClientModule,DragDropModule,AutocompleteComponent],
   templateUrl: './autocomplete.component.html',
   styleUrl: './autocomplete.component.css'
 })
@@ -23,6 +23,16 @@ faPencil = faPencil;
  faXmark = faXmark;
    showForm = false;
   formModel: any;
+    
+
+   fieldPalette = [
+    { type: 'autocomplete', label: 'Autocomplete' },
+    { type: 'text', label: 'Text Field' },
+  ];
+
+  formFields: { id: string; type: string; label: string;  value?: any; // Add this
+ }[] = [];
+ selectedContent: string | null = null;
  
 
 
@@ -45,5 +55,26 @@ faPencil = faPencil;
   }
 onSubmit(){}
  
+ onDropInRow(event: CdkDragDrop<any>) {
+    const draggedField = event.item.data;
+    if (!draggedField?.type) return;
 
+    const newField = {
+      id: crypto.randomUUID(),
+      type: draggedField.type,
+      label: draggedField.label,
+    };
+    this.formFields.splice(event.currentIndex, 0, newField);
+  }
+  
+  trackByFieldPalette(index: number, item: { type: string }) {
+    return item.type;
+  }
+
+  trackByFormField(index: number, item: { id: string }) {
+    return item.id;
+  }
+  displayContent(contentName: string): void {
+    this.selectedContent = contentName;
+  }
 }
