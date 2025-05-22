@@ -129,6 +129,11 @@ onDropInRow(event: CdkDragDrop<any>) {
 }
 
 jsonOutput: string | null = null;
+selectedField: FormField | null = null;
+
+selectField(field: FormField) {
+  this.selectedField = field;
+}
 
 generateJSON() {
   if (this.selectedField) {
@@ -137,10 +142,6 @@ generateJSON() {
     this.jsonOutput = 'No field selected.';
   }
 }
-selectedField: FormField | null = null;
 
-selectField(field: FormField) {
-  this.selectedField = field;
-}
 
 }
