@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { Form } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { FormField, FormRow } from './form';
 
 
@@ -11,6 +11,7 @@ import { FormField, FormRow } from './form';
 export class FormDataService {
  private _rows = signal<FormRow[]>([]);
   private readonly rows = this._rows.asReadonly();
+  getFormModel: any;
 
   constructor(private http: HttpClient) {
     this._rows.set([
@@ -48,9 +49,7 @@ export class FormDataService {
     this._rows.set(updatedRows);
   }
  
-  getFormModel(): Observable<Form> {
-    return this.http.get<Form>('assets/formdata.json');
-  }
+ 
 
 
 }

@@ -11,6 +11,10 @@ export interface FormField {
   className: string;
   name: string;
   access: boolean;
+
+
+    
+  options?: any[]; // for select or autocomplete fields
   roles: {
     admin: boolean;
     editor: boolean;
