@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPencil, faXmark } from '@fortawesome/free-solid-svg-icons'; 
@@ -7,6 +7,7 @@ import { FormDataService } from '../form-data.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import {CdkDragDrop, DragDropModule} from '@angular/cdk/drag-drop'
+import { FormField } from '../form';
 
 
 @Component({
@@ -22,6 +23,8 @@ faPencil = faPencil;
  faXmark = faXmark;
    showForm = false;
   formModel: any;
+    @Input() field!: FormField; // <-- this is the missing piece
+
     
 
    fieldPalette = [
@@ -50,24 +53,7 @@ faPencil = faPencil;
   }
 onSubmit(){}
  
- onDropInRow(event: CdkDragDrop<any>) {
-    const draggedField = event.item.data;
-    if (!draggedField?.type) return;
 
-    const newField = {
-      id: crypto.randomUUID(),
-      type: draggedField.type,
-      label: draggedField.label,
-    };
-    this.formFields.splice(event.currentIndex, 0, newField);
-  }
-  
-  trackByFieldPalette(index: number, item: { type: string }) {
-    return item.type;
-  }
-
-  trackByFormField(index: number, item: { id: string }) {
-    return item.id;
-  }
 
 }
+

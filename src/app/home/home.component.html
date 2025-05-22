@@ -26,12 +26,21 @@
 
     <!-- Main Content Area -->
     <div class="col bg-white p-4 overflow-auto">
+       <h5 class="text-primary mb-3">Form Builder</h5>
 
       <!-- Rendered Component for Selected Field -->
-     <section class="mb-4" cdkDrag>
-  <app-autocomplete></app-autocomplete>
-  <app-text-field></app-text-field>
-</section>
+     <section
+     
+        cdkDropList
+        #formBuilderDropList="cdkDropList"
+        id="formBuilder"
+        [cdkDropListData]="formFields"
+        (cdkDropListDropped)="onDropInRow($event)"
+        class="border border-primary-subtle rounded p-3 mt-3"
+        style="min-height: 300px;"
+      
+   
+></section>
 
 
     </div>

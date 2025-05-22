@@ -1,6 +1,6 @@
 import { TextFieldComponent } from './../text-field/text-field.component';
 import { Component } from '@angular/core';
-import {  DragDropModule } from '@angular/cdk/drag-drop';
+import {  CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { AutocompleteComponent } from '../autocomplete/autocomplete.component';
 import { CommonModule } from '@angular/common';
 import { faPencil, faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -38,6 +38,20 @@ export class HomeComponent {
   };
   this.formFields.push(newField);
 }
- 
+
+onDropInRow(event: CdkDragDrop<any>) {
+  const draggedField = event.item.data;
+  if (!draggedField?.type) return;
+
+  const newField = {
+    id: crypto.randomUUID(),
+    type: draggedField.type,
+    label: draggedField.label,
+    value: ''
+  };
+  const insertIndex = event.currentIndex ?? this.formFields.length;
+  this.formFields.splice(insertIndex, 0, newField);
+}
+
 
 }
