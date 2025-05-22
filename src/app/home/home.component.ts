@@ -7,7 +7,6 @@ import { faPencil, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpClientModule } from '@angular/common/http';
-import { FormField } from '../form';
 
 
 @Component({
@@ -18,35 +17,18 @@ import { FormField } from '../form';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
+  faPencil = faPencil;
+   faXmark = faXmark;
+   showForm = false;
   fieldPalette = [
     { type: 'autocomplete', label: 'Autocomplete' },
     { type: 'text', label: 'Text Field' },
-  ];
+  ]; //sidebar contant add 
 
-  formFields: FormField[] = [];
-
-
+  formFields: { id: string; type: string; label: string;  value?: any; 
+ }[] = [];
   
-  trackByFieldPalette(index: number, item: { type: string }) {
-    return item.type;
-  }
-  //  onDropInRow(event: CdkDragDrop<any>) {
-  //   const draggedField = event.item.data;
-  //   if (!draggedField?.type) return;
-
-  //   const newField = {
-  //     id: crypto.randomUUID(),
-  //     type: draggedField.type,
-  //     label: draggedField.label,
-  //   };
-  //   this.formFields.splice(event.currentIndex, 0, newField);
-  // }
- 
-
-  trackByFormField(index: number, item: { id: string }) {
-    return item.id;
-  }
-
+  
 
   displayContent(field: any) {
   const newField = {
@@ -55,76 +37,31 @@ export class HomeComponent {
     label: field.label,
     value: '',
   };
-  this.formFields.push();
+  this.formFields.push(newField);
 }
- 
+ toggleForm(action: 'open' | 'close') {
+    this.showForm = action === 'open';
+  }
 
-// createDefaultFormField(type: string): FormField {
-//   return {
-//     id: crypto.randomUUID(), // Or use uuidv4() if you're using that
-//     type: type,
-//     label: `${type} field`,
-//     value: '',
-//     autocomplete: '',
-//     required: false,
-//     helpText: '',
-//     placeholder: '',
-//     className: '',
-//     name: '',
-//     access: false,
-//     options: [],
-//     roles: {
-//       admin: false,
-//       editor: false,
-//       viewer: false,
-//     },
-//     defaultConfig: {}
-//   };
-// }
-// onFieldDrop(type: string) {
-//   const newField = this.createDefaultFormField(type);
-//   this.formFields.push(newField);
-// }
+ onDropInRow(event: CdkDragDrop<any>) {
+    const draggedField = event.item.data;
+    if (!draggedField?.type) return;
 
-defaultFormField: FormField = {
-  id: '',
-  type: '',
-  value: '',
-  autocomplete: '',
-  required: false,
-  label: '',
-  helpText: '',
-  placeholder: '',
-  className: '',
-  name: '',
-  access: false,
-  options: [],
-  roles: {
-    admin: false,
-    editor: false,
-    viewer: false
-  },
-  defaultConfig: {}
-};
-
-normalizeField(field: Partial<FormField>): FormField {
-  return {
-    ...this.defaultFormField,
-    ...field,
-    id: field.id || crypto.randomUUID()
-  };
-}
-
-
-onDropInRow(event: CdkDragDrop<any>) {
-  const dropped = event.item.data;
+    const newField = {
+      id: crypto.randomUUID(),
+      type: draggedField.type,
+      label: draggedField.label,
+    };
+    this.formFields.splice(event.currentIndex, 0, newField);
+  }
   
-  const normalizedField = this.normalizeField({
-    type: dropped.type,
-    label: dropped.label || 'Label',
-    name: dropped.name || 'name',
-  });
+  trackByFieldPalette(index: number, item: { type: string }) {
+    return item.type;
+  }
 
-  this.formFields.push(normalizedField);
-}
+  trackByFormField(index: number, item: { id: string }) {
+    return item.id;
+  }
+
+
 }
