@@ -1,7 +1,7 @@
 import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPencil, faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -13,36 +13,31 @@ import { FormDataService } from '../form-data.service';
   templateUrl: './text-field.component.html',
   styleUrls: ['./text-field.component.css'] 
 })
-export class TextFieldComponent {
+export class TextFieldComponent implements OnInit {
  
   
-
-  formModel: any;
-  @Input() showForm: boolean = false;
+ @Input() showForm: boolean = false;
   @Input() editedField: any = null;
 
-  constructor(private formDataService: FormDataService) {}
-  
 
-    ngOnInit(): void {
-    // You need the row ID to get the model.
-    const rowId = this.formDataService.getRows()[0]?.id; // or pass it dynamically
-    if (rowId) {
-      this.formModel = this.formDataService.getFormModel(rowId);
+  formModel: any;
 
-    } else {
-      console.warn('No row ID found in FormDataService.');
+  ngOnInit(): void {
+    // Use the passed editedField or create a new object
+    this.formModel = this.editedField || {};
+
+    // Initialize roles to avoid undefined error
+    if (!this.formModel.roles) {
+      this.formModel.roles = {
+        admin: false,
+        editor: false,
+        viewer: false
+      };
     }
   }
-  
-
-
-
-
-
- 
-onSubmit(){}
- 
- 
-
+  onSubmit() {}
 }
+ 
+ 
+
+

@@ -1,25 +1,54 @@
-<form *ngIf="showForm && formModel?.type === 'button'" (ngSubmit)="onSubmit()" #form="ngForm" class="container mt-4">
-  <div class="mb-3">
+<form *ngIf="showForm && editedField" (ngSubmit)="onSubmit()" #form="ngForm" class="container mt-4">
+
+  <!-- Required Checkbox -->
+  <div class="form-check mt-4">
+    <input class="form-check-input" type="checkbox" id="requiredCheckbox"
+           [(ngModel)]="formModel.required" name="required">
+    <label class="form-check-label" for="requiredCheckbox">Required</label>
+  </div>
+
+  <!-- Label -->
+  <div class="mt-3">
     <label for="labelInput" class="form-label">Label</label>
     <input type="text" class="form-control" id="labelInput"
            [(ngModel)]="formModel.label" name="label">
   </div>
 
-  <div class="mb-3">
-    <label for="typeSelect" class="form-label">Button Type</label>
-    <select class="form-select" id="typeSelect"
-            [(ngModel)]="formModel.buttonType" name="buttonType">
-      <option value="button">Button</option>
-      <option value="submit">Submit</option>
-      <option value="reset">Reset</option>
-    </select>
+  <!-- Help Text -->
+  <div class="mt-3">
+    <label for="helpTextInput" class="form-label">Help Text</label>
+    <input type="text" class="form-control" id="helpTextInput"
+           [(ngModel)]="formModel.helpText" name="helpText">
   </div>
 
-  <div class="mb-3">
-    <label for="valueInput" class="form-label">Value</label>
-    <input type="text" class="form-control" id="valueInput"
-           [(ngModel)]="formModel.value" name="value">
+  <!-- Placeholder -->
+  <div class="mt-3">
+    <label for="placeholderInput" class="form-label">Placeholder</label>
+    <input type="text" class="form-control" id="placeholderInput"
+           [(ngModel)]="formModel.placeholder" name="placeholder">
   </div>
 
-  <button type="submit" class="btn btn-primary">Save</button>
+  <!-- Class -->
+  <div class="mt-3">
+    <label for="classInput" class="form-label">Class</label>
+    <input type="text" class="form-control" id="classInput"
+           [(ngModel)]="formModel.className" name="className">
+  </div>
+
+  <!-- Name -->
+  <div class="mt-3">
+    <label for="nameInput" class="form-label">Name</label>
+    <input type="text" class="form-control" id="nameInput"
+           [(ngModel)]="formModel.name" name="name">
+  </div>
+
+  <!-- Access Checkbox -->
+  <div class="form-check mt-4">
+    <input class="form-check-input" type="checkbox" id="accessCheckbox"
+           [(ngModel)]="formModel.access" name="access">
+    <label class="form-check-label" for="accessCheckbox">Access</label>
+  </div>
+
+
+  
 </form>

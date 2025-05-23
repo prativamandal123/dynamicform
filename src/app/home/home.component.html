@@ -96,17 +96,20 @@
           [(ngModel)]="field.value"
         />
       </ng-container>
-  <ng-container *ngIf="showForm && editedField">
+      
+  <ng-container *ngIf="formEditState[field.id]">
   <app-autocomplete
-    *ngIf="editedField.type === 'autocomplete'"
-    [showForm]="showForm"
-    [editedField]="editedField"
+    *ngIf="field.type === 'autocomplete'"
+    [editedField]="field"
+      [showForm]="formEditState[field.id]"
+
   ></app-autocomplete>
 
   <app-text-field
-    *ngIf="editedField.type === 'text'"
-    [showForm]="showForm"
-    [editedField]="editedField"
+    *ngIf="field.type === 'text'"
+    [editedField]="field"
+      [showForm]="formEditState[field.id]"
+
   ></app-text-field>
 </ng-container>
 
