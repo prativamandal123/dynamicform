@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPencil, faXmark } from '@fortawesome/free-solid-svg-icons'; 
@@ -16,7 +16,7 @@ import {CdkDragDrop, DragDropModule} from '@angular/cdk/drag-drop'
   templateUrl: './autocomplete.component.html',
   styleUrl: './autocomplete.component.css'
 })
-export class AutocompleteComponent {
+export class AutocompleteComponent implements OnInit {
   
 formModel: any;
   @Input() showForm: boolean = false;
@@ -30,26 +30,30 @@ formModel: any;
   constructor(private formDataService: FormDataService) {}
   
 
-    ngOnInit(): void {
-    // You need the row ID to get the model.
-    const rowId = this.formDataService.getRows()[0]?.id; // or pass it dynamically
+  
+  ngOnInit(): void {
+    const rowId = this.formDataService.getRows()[0]?.id;
+
     if (rowId) {
       this.formModel = this.formDataService.getFormModel(rowId);
 
     } else {
-      console.warn('No row ID found in FormDataService.');
+      // fallback: if editedField passed in, use that
+      this.formModel = this.editedField || {};
+    }
+
+    // Initialize roles if undefined to avoid runtime errors
+    if (!this.formModel.roles) {
+      this.formModel.roles = {
+        admin: false,
+        editor: false,
+        viewer: false
+      };
     }
   }
-  
-
-
-
-
-
- 
-onSubmit(){}
- 
- 
+  onSubmit() {
+    // handle form submit
+  }
 
 
 }

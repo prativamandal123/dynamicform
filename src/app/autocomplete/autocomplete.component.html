@@ -1,82 +1,77 @@
-  
-  <form *ngIf="showForm && editedField" (ngSubmit)="onSubmit()" #form="ngForm" class="container mt-4">
-    <!-- Required Checkbox -->
-     <div class="row">
-      <div class="col-md-6">
-        <div class="form-check mt-4">
-          <input class="form-check-input" type="checkbox" id="requiredCheckbox"
-                 [(ngModel)]="formModel.required" name="required">
-          <label class="form-check-label" for="requiredCheckbox">Required</label>
-        </div> 
+<form *ngIf="showForm && editedField" (ngSubmit)="onSubmit()" #form="ngForm" class="container mt-4">
 
-        <!-- Label -->
-         <div class="mt-3">
-          <label for="labelInput" class="form-label">Label</label>
-          <input type="text" class="form-control" id="labelInput"
-                 [(ngModel)]="formModel.label" name="label">
-        </div> 
-
-        <!-- Help Text -->
-       <div class="mt-3">
-          <label for="helpTextInput" class="form-label">Help Text</label>
-          <input type="text" class="form-control" id="helpTextInput"
-                 [(ngModel)]="formModel.helpText" name="helpText">
-        </div> 
-
-        <!-- Placeholder -->
-       <div class="mt-3">
-          <label for="placeholderInput" class="form-label">Placeholder</label>
-          <input type="text" class="form-control" id="placeholderInput"
-                 [(ngModel)]="formModel.placeholder" name="placeholder">
-        </div> 
-
-        <!-- Class -->
-         <div class="mt-3">
-          <label for="classInput" class="form-label">Class</label>
-          <input type="text" class="form-control" id="classInput"
-                 [(ngModel)]="formModel.className" name="className">
-        </div> 
-
-        <!-- Name -->
-         <div class="mt-3">
-          <label for="nameInput" class="form-label">Name</label>
-          <input type="text" class="form-control" id="nameInput"
-                 [(ngModel)]="formModel.name" name="name">
-        </div> 
-
-        <!-- Access Checkbox -->
-         <div class="form-check mt-4">
-          <input class="form-check-input" type="checkbox" id="accessCheckbox"
-                 [(ngModel)]="formModel.access" name="access">
-          <label class="form-check-label" for="accessCheckbox">Access</label>
-        </div>
+  <!-- Required Checkbox -->
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-check mt-4">
+        <input class="form-check-input" type="checkbox" id="requiredCheckbox"
+               [(ngModel)]="formModel.required" name="required">
+        <label class="form-check-label" for="requiredCheckbox">Required</label>
       </div>
-    </div> 
 
-    <!-- Roles -->
-     <div class="mt-4">
-      <h5>Limit access to one or more of the following roles:</h5>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="roleAdmin"
-               [(ngModel)]="formModel.roles.admin" name="roleAdmin">
-        <label class="form-check-label" for="roleAdmin">Admin</label>
+      <!-- Label -->
+      <div class="mt-3">
+        <label for="labelInput" class="form-label">Label</label>
+        <input type="text" class="form-control" id="labelInput"
+               [(ngModel)]="formModel.label" name="label">
       </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="roleEditor"
-               [(ngModel)]="formModel.roles.editor" name="roleEditor">
-        <label class="form-check-label" for="roleEditor">Editor</label>
+
+      <!-- Help Text -->
+      <div class="mt-3">
+        <label for="helpTextInput" class="form-label">Help Text</label>
+        <input type="text" class="form-control" id="helpTextInput"
+               [(ngModel)]="formModel.helpText" name="helpText">
       </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="roleViewer"
-               [(ngModel)]="formModel.roles.viewer" name="roleViewer">
-        <label class="form-check-label" for="roleViewer">Viewer</label>
+
+      <!-- Placeholder -->
+      <div class="mt-3">
+        <label for="placeholderInput" class="form-label">Placeholder</label>
+        <input type="text" class="form-control" id="placeholderInput"
+               [(ngModel)]="formModel.placeholder" name="placeholder">
+      </div>
+
+      <!-- Class -->
+      <div class="mt-3">
+        <label for="classInput" class="form-label">Class</label>
+        <input type="text" class="form-control" id="classInput"
+               [(ngModel)]="formModel.className" name="className">
+      </div>
+
+      <!-- Name -->
+      <div class="mt-3">
+        <label for="nameInput" class="form-label">Name</label>
+        <input type="text" class="form-control" id="nameInput"
+               [(ngModel)]="formModel.name" name="name">
+      </div>
+
+      <!-- Access Checkbox -->
+      <div class="form-check mt-4">
+        <input class="form-check-input" type="checkbox" id="accessCheckbox"
+               [(ngModel)]="formModel.access" name="access">
+        <label class="form-check-label" for="accessCheckbox">Access</label>
       </div>
     </div>
+  </div>
 
-  </form>
+  <!-- Roles -->
+  <div class="mt-4">
+    <h5>Limit access to one or more of the following roles:</h5>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="roleAdmin"
+             [(ngModel)]="formModel.roles.admin" name="roleAdmin">
+      <label class="form-check-label" for="roleAdmin">Admin</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="roleEditor"
+             [(ngModel)]="formModel.roles.editor" name="roleEditor">
+      <label class="form-check-label" for="roleEditor">Editor</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="roleViewer"
+             [(ngModel)]="formModel.roles.viewer" name="roleViewer">
+      <label class="form-check-label" for="roleViewer">Viewer</label>
+    </div>
+  </div>
 
-
-
-
-
- 
+  <button type="submit" class="btn btn-primary mt-3">Save</button>
+</form>

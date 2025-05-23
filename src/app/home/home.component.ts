@@ -30,25 +30,28 @@ import { FormDataService } from '../form-data.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
+  faPencil = faPencil;
+   faXmark = faXmark;
+   showForm = false;
+   editedField: any = null; // the field currently being edited
+  currentEditingFieldId: string | null = null;
+formEditState: { [fieldId: string]: boolean } = {}; // Track which fields have open config forms
 
 
-  
+
+    formFields: FormField[] = [];
+    jsonOutput: string | null = null;
+  selectedField: FormField | null = null;
+
   constructor(private formDataService: FormDataService) {}
 
-  faPencil = faPencil;
-  faXmark = faXmark;
-
-  showForm = false;
-  editedField: FormField | null = null;
-
+  
   fieldPalette = [
     { type: 'autocomplete', label: 'Autocomplete' },
     { type: 'text', label: 'Text Field' },
   ];
 
-  formFields: FormField[] = [];
-  jsonOutput: string | null = null;
-  selectedField: FormField | null = null;
+  
 
   fieldTemplates: { [key: string]: Partial<FormField> } = {};
 
@@ -62,6 +65,16 @@ export class HomeComponent {
       }
     });
   }
+  
+toggleForm(field: any, action: 'open' | 'close') {
+  if (action === 'open') {
+    this.formEditState[field.id] = true;
+      console.log('Toggling form for:', field.id, 'action:', action);
+
+  } else if (action === 'close') {
+    this.formEditState[field.id] = false;
+  }
+}
 
   displayContent(field: { type: string; label: string }) {
     
@@ -85,7 +98,28 @@ export class HomeComponent {
     this.formFields.push(newField);
   }
 
-  onDropInRow(event: CdkDragDrop<any>) {
+  // onDropInRow(event: CdkDragDrop<any>) {
+fields = [
+    {
+      id: 'autocomplete1',
+      type: 'autocomplete',
+      label: 'Country',
+      // autocomplete model data here
+    },
+    {
+      id: 'text1',
+      type: 'text',
+      label: 'Username',
+      required: true,
+      placeholder: 'Enter username',
+      // text field model data here
+    }
+  ];
+
+
+
+
+ onDropInRow(event: CdkDragDrop<any>) {
     const draggedField = event.item.data;
     if (!draggedField?.type) return;
 
@@ -110,15 +144,7 @@ export class HomeComponent {
     this.formFields.splice(event.currentIndex, 0, newField);
   }
 
-  toggleForm(field: FormField, action: 'open' | 'close') {
-    if (action === 'open') {
-      this.editedField = field;
-      this.showForm = true;
-    } else {
-      this.editedField = null;
-      this.showForm = false;
-    }
-  }
+  
 
   deleteField(fieldToDelete: FormField) {
     this.formFields = this.formFields.filter(field => field.id !== fieldToDelete.id);
@@ -144,7 +170,14 @@ export class HomeComponent {
   trackByFormField(index: number, item: { id: string }) {
     return item.id;
   }
-
+editField(fieldId: string) {
+    if (this.currentEditingFieldId === fieldId) {
+      // toggle off if clicking same field again
+      this.currentEditingFieldId = null;
+    } else {
+      this.currentEditingFieldId = fieldId;
+    }
+  }
 
 
 
