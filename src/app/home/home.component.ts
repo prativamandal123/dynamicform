@@ -1,5 +1,5 @@
 import { TextFieldComponent } from './../text-field/text-field.component';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import {  CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { AutocompleteComponent } from '../autocomplete/autocomplete.component';
 import { CommonModule } from '@angular/common';
@@ -20,15 +20,30 @@ export class HomeComponent {
   faPencil = faPencil;
    faXmark = faXmark;
    showForm = false;
+   editedField: any = null; // the field currently being edited
+
+
   fieldPalette = [
     { type: 'autocomplete', label: 'Autocomplete' },
     { type: 'text', label: 'Text Field' },
   ]; //sidebar contant add 
 
-  formFields: { id: string; type: string; label: string;  value?: any; 
- }[] = [];
+ formFields: { id: string; type: string; label: string; value?: any; editing?: boolean }[] = [];
+
   
-  
+toggleForm(field: any, action: 'open' | 'close') {
+  if (action === 'open') {
+    this.editedField = field;
+    this.showForm = true;
+  } else {
+    this.editedField = null;
+    this.showForm = false;
+  }
+}
+
+
+
+
 
   displayContent(field: any) {
   const newField = {
@@ -39,9 +54,7 @@ export class HomeComponent {
   };
   this.formFields.push(newField);
 }
- toggleForm(action: 'open' | 'close') {
-    this.showForm = action === 'open';
-  }
+
 
  onDropInRow(event: CdkDragDrop<any>) {
     const draggedField = event.item.data;

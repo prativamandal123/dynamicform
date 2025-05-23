@@ -1,55 +1,45 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { Form } from '@angular/forms';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { FormField, FormRow } from './form';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FormDataService {
- private _rows = signal<FormRow[]>([]);
-  private readonly rows = this._rows.asReadonly();
-  getFormModel: any;
+  private _rows = signal<FormRow[]>([
+    {
+      id: crypto.randomUUID(),
+      label: '',
+      type: undefined,
+      formModel: [],
+    },
+  ]);
+  readonly rows = this._rows.asReadonly();
 
-  constructor(private http: HttpClient) {
-    this._rows.set([
-      {
-        id: crypto.randomUUID(),
-        formModel: [],
-        label: '',
-        type: undefined
-      }
-    ]);
-  }
+  constructor(private http: HttpClient) {}
 
   getRows(): FormRow[] {
     return this.rows();
   }
 
+  getFormModel(rowId: string): FormField[] | undefined {
+    return this._rows().find(row => row.id === rowId)?.formModel;
+  }
+
   addFormModel(field: FormField, rowId: string, index?: number): void {
     const updatedRows = this._rows().map(row => {
-      if (row.id === rowId) {
-        const updatedFields = [...row.formModel];
-        if (index !== undefined && index >= 0 && index < updatedFields.length) {
-          updatedFields.splice(index, 0, field);
-        } else {
-          updatedFields.push(field);
-        }
+      if (row.id !== rowId) return row;
 
-        return {
-          ...row,
-          formModel: updatedFields
-        };
+      const updatedFields = [...row.formModel];
+      if (index !== undefined && index >= 0 && index <= updatedFields.length) {
+        updatedFields.splice(index, 0, field);
+      } else {
+        updatedFields.push(field);
       }
-      return row;
+
+      return { ...row, formModel: updatedFields };
     });
 
     this._rows.set(updatedRows);
   }
- 
- 
-
-
 }

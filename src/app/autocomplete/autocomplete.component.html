@@ -1,5 +1,5 @@
   
-  <form *ngIf="showForm" (ngSubmit)="onSubmit()" #form="ngForm" class="container mt-4">
+  <form *ngIf="showForm && editedField" (ngSubmit)="onSubmit()" #form="ngForm" class="container mt-4">
     <!-- Required Checkbox -->
      <div class="row">
       <div class="col-md-6">

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPencil, faXmark } from '@fortawesome/free-solid-svg-icons'; 
@@ -14,24 +14,34 @@ import {CdkDragDrop, DragDropModule} from '@angular/cdk/drag-drop'
     standalone: true,
   imports: [CommonModule,ReactiveFormsModule,FormsModule,FontAwesomeModule,HttpClientModule,DragDropModule],
   templateUrl: './autocomplete.component.html',
-  styleUrl: './autocomplete.component.css'
+styleUrls: ['./autocomplete.component.css']
 })
 export class AutocompleteComponent {
   
-faPencil = faPencil;
- faXmark = faXmark;
-   showForm = false;
+
+
   formModel: any;
-    
-  constructor(private formDataService: FormDataService ) {}
-   
+      
+  @Input() showForm: boolean = false;
+  @Input() editedField: any = null;
+
+
+  constructor(private formDataService: FormDataService) {}
+
   ngOnInit(): void {
-    this.formDataService.getFormModel().subscribe((data: any) => {
-      this.formModel = Array.isArray(data.formModel) ? data.formModel[0] : data.formModel;
-    });
+    // You need the row ID to get the model.
+    const rowId = this.formDataService.getRows()[0]?.id; // or pass it dynamically
+    if (rowId) {
+      this.formModel = this.formDataService.getFormModel(rowId);
+    } else {
+      console.warn('No row ID found in FormDataService.');
+    }
   }
- 
-  onSubmit(){}
+  
+
+  onSubmit() {
+    // handle form submission
+  }
  
 
 

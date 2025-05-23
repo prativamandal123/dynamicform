@@ -1,29 +1,22 @@
+// models/form-field.model.ts
 export interface FormField {
   id: string;
-  type: any;
-    value?: any; // Add this line
-
-  autocomplete: string;
-  required: boolean;
+  type: string;
   label: string;
-  helpText: string;
-  placeholder: string;
-  className: string;
-  name: string;
-  access: boolean;
-
-
-    
-  options?: any[]; // for select or autocomplete fields
-  roles: {
+  value?: any;
+  required?: boolean;
+  placeholder?: string;
+  helpText?: string;
+  className?: string;
+  name?: string;
+  access?: boolean;
+  roles?: {
     admin: boolean;
     editor: boolean;
     viewer: boolean;
   };
-    defaultConfig:any;
-
-
 }
+
 
 export interface FormRow {
   label: string;
