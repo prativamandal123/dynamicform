@@ -1,19 +1,36 @@
 {
-  "formModel": [
-    {
-      "autocomplete": "",
-      "required": false,
-      "label": "",
-      "helpText": "",
-      "placeholder": "",
-      "className": "",
-      "name": "",
-      "access": false,
-      "roles": {
-        "admin": false,
-        "editor": false,
-        "viewer": false
-      }
-    }
-  ]
+  "autocomplete": {
+    "autocomplete": "",
+    "required": false,
+    "label": "Autocomplete",
+    "helpText": "",
+    "placeholder": "",
+    "className": "",
+    "name": "",
+    "access": false,
+    "roles": {
+      "admin": false,
+      "editor": false,
+      "viewer": false
+    },
+    "value": "",
+    "defaultConfig": {}
+  },
+  "text": {
+    "required": false,
+    "label": "Text Field",
+    "helpText": "",
+    "placeholder": "",
+    "className": "",
+    "name": "",
+    "access": true,
+    "roles": {
+      "admin": true,
+      "editor": false,
+      "viewer": true
+    },
+    "autocomplete": "",
+    "value": "",
+    "defaultConfig": {}
+  }
 }

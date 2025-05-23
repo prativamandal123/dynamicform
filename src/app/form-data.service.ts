@@ -49,7 +49,10 @@ export class FormDataService {
     this._rows.set(updatedRows);
   }
  
- 
+
+  getTemplates(): Observable<any> {
+    return this.http.get('/assets/formdata.json');
+  }
 
 
 }

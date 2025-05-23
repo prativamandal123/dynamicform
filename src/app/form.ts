@@ -10,10 +10,7 @@ export interface FormField {
   placeholder: string;
   className: string;
   name: string;
-  access: boolean;
-
-
-    
+  access: boolean;  
   options?: any[]; // for select or autocomplete fields
   roles: {
     admin: boolean;
@@ -21,6 +18,7 @@ export interface FormField {
     viewer: boolean;
   };
     defaultConfig:any;
+
 
 }
 
