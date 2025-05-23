@@ -15,10 +15,11 @@
             *ngFor="let field of fieldPalette; trackBy: trackByFieldPalette"
             cdkDrag
             [cdkDragData]="field"
-            (click)="displayContent(field)"
             class="btn btn-outline-primary text-start"
           >
-            {{ field.label }}
+            <div (click)="displayContent(field)">
+              {{ field.label }}
+            </div>
           </div>
         </div>
       </nav>
@@ -39,20 +40,19 @@
 
         <div class="d-flex flex-column gap-3">
           <div
-  *ngFor="let field of formFields; trackBy: trackByFormField"
-  cdkDrag
-  class="border rounded bg-light p-3"
-  (click)="selectField(field)" 
-  [class.selected]="field === selectedField"  
->
- 
+            *ngFor="let field of formFields; trackBy: trackByFormField"
+            cdkDrag
+            class="border rounded bg-light p-3"
+            (click)="selectField(field)" 
+            [class.selected]="field === selectedField"  
+          > 
             <div class="d-flex justify-content-between align-items-center mb-2">
               <label [attr.for]="field.id" class="form-label mb-0">{{ field.label }}</label>
               <div>
-                <button type="button" class="btn btn-sm btn-outline-secondary me-1" (click)="toggleForm('open')">
+                <button type="button" class="btn btn-sm btn-outline-secondary me-1" (click)="toggleForm(field, 'open')">
                   <fa-icon [icon]="faPencil"></fa-icon>
                 </button>
-                <button type="button" class="btn btn-sm btn-outline-danger" (click)="toggleForm('close')">
+                <button type="button" class="btn btn-sm btn-outline-danger" (click)="deleteField(field)">
                   <fa-icon [icon]="faXmark"></fa-icon>
                 </button>
               </div>
@@ -66,7 +66,6 @@
                 [id]="field.id"
                 placeholder="Start typing..."
                 [(ngModel)]="field.value"
-                name="autocomplete"
               />
 
               <input
@@ -76,7 +75,6 @@
                 [id]="field.id"
                 placeholder="Enter text"
                 [(ngModel)]="field.value"
-                name="textField"
               />
 
               <textarea
@@ -95,16 +93,37 @@
                 [(ngModel)]="field.value"
               />
             </ng-container>
+
+            <ng-container *ngIf="showForm && editedField?.id === field.id">
+              <app-autocomplete
+                *ngIf="editedField?.type === 'autocomplete'"
+                [showForm]="showForm"
+                [editedField]="editedField"
+              ></app-autocomplete>
+
+              <app-text-field
+                *ngIf="editedField?.type === 'text'"
+                [showForm]="showForm"
+                [editedField]="editedField"
+              ></app-text-field>
+            </ng-container>
+
           </div>
         </div>
 
         <div class="mt-4">
           <button class="btn btn-success" (click)="generateJSON()">Create JSON</button>
+
         </div>
 
         <pre *ngIf="jsonOutput" class="mt-3 bg-dark text-white p-3 rounded">
 {{ jsonOutput }}
         </pre>
+
+        <!-- Render actual component dynamically -->
+
+
+
       </section>
     </div>
   </div>

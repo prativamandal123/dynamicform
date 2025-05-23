@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef } from '@angular/core';
 import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -30,11 +30,16 @@ import { FormDataService } from '../form-data.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
+
+
+  
   constructor(private formDataService: FormDataService) {}
 
   faPencil = faPencil;
   faXmark = faXmark;
-  showForm = true;
+
+  showForm = false;
+  editedField: FormField | null = null;
 
   fieldPalette = [
     { type: 'autocomplete', label: 'Autocomplete' },
@@ -59,6 +64,7 @@ export class HomeComponent {
   }
 
   displayContent(field: { type: string; label: string }) {
+    
     const template = this.fieldTemplates[field.type] || {};
     const newField: FormField = {
       id: crypto.randomUUID(),
@@ -73,20 +79,62 @@ export class HomeComponent {
       access: template.access || false,
       roles: template.roles || { admin: false, editor: false, viewer: false },
       value: '',
-      defaultConfig: template.defaultConfig || {}
+      defaultConfig: template.defaultConfig || {},
+      showHtml: false
     };
-
     this.formFields.push(newField);
-  }
-
-  toggleForm(action: 'open' | 'close') {
-    this.showForm = action === 'open';
   }
 
   onDropInRow(event: CdkDragDrop<any>) {
     const draggedField = event.item.data;
     if (!draggedField?.type) return;
-    this.displayContent(draggedField);
+
+    const template = this.fieldTemplates[draggedField.type] || {};
+    const newField: FormField = {
+      id: crypto.randomUUID(),
+      type: draggedField.type,
+      label: draggedField.label,
+      autocomplete: template.autocomplete || '',
+      required: template.required || false,
+      helpText: template.helpText || '',
+      placeholder: template.placeholder || '',
+      className: template.className || '',
+      name: template.name || '',
+      access: template.access || false,
+      roles: template.roles || { admin: false, editor: false, viewer: false },
+      value: '',
+      defaultConfig: template.defaultConfig || {},
+      showHtml: false,
+    };
+
+    this.formFields.splice(event.currentIndex, 0, newField);
+  }
+
+  toggleForm(field: FormField, action: 'open' | 'close') {
+    if (action === 'open') {
+      this.editedField = field;
+      this.showForm = true;
+    } else {
+      this.editedField = null;
+      this.showForm = false;
+    }
+  }
+
+  deleteField(fieldToDelete: FormField) {
+    this.formFields = this.formFields.filter(field => field.id !== fieldToDelete.id);
+    if (this.selectedField?.id === fieldToDelete.id) {
+      this.selectedField = null;
+      this.editedField = null;
+      this.showForm = false;
+    }
+  }
+
+  selectField(field: FormField) {
+    this.selectedField = field;
+  }
+
+  generateJSON() {
+    this.jsonOutput = JSON.stringify(this.formFields, null, 2);
   }
 
   trackByFieldPalette(index: number, item: { type: string }) {
@@ -97,20 +145,7 @@ export class HomeComponent {
     return item.id;
   }
 
-  selectField(field: FormField) {
-    this.selectedField = field;
-  }
 
-  generateJSON() {
-    if (this.selectedField) {
-      const template = this.fieldTemplates[this.selectedField.type] || {};
-      const completeField = {
-        ...template,
-        ...this.selectedField
-      };
-      this.jsonOutput = JSON.stringify(completeField, null, 2);
-    } else {
-      this.jsonOutput = 'No field selected.';
-    }
-  }
+
+
 }
