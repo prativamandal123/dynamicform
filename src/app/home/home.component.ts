@@ -10,6 +10,8 @@ import { faPencil, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FormField } from '../form';
 import { FormDataService } from '../form-data.service';
 import { CaptureHtmlDirective } from '../capture-html.directive';
+import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+
 
 
 @Component({
@@ -39,29 +41,49 @@ export class HomeComponent {
    formFields: FormField[] = [];
    jsonOutput: string | null = null;
    selectedField: FormField | null = null;
+   fieldPalette: { type: string; label: string }[] = [];
+
 
   constructor(private formDataService: FormDataService) {}
 
   
-  fieldPalette = [
-    { type: 'autocomplete', label: 'Autocomplete' },
-    { type: 'text', label: 'Text Field' },
-  ];
+  // fieldPalette = [
+  //   { type: 'autocomplete', label: 'Autocomplete' },
+  //   { type: 'text', label: 'Text Field' },
+  // ];
 
   
 
   fieldTemplates: { [key: string]: Partial<FormField> } = {};
 
+  // ngOnInit(): void {
+  //   this.formDataService.getTemplates().subscribe({
+  //     next: (templates) => {
+  //       this.fieldTemplates = templates;
+  //     },
+  //     error: (err) => {
+  //       console.error('Failed to load templates:', err);
+  //     }
+  //   });
+  // }
   ngOnInit(): void {
-    this.formDataService.getTemplates().subscribe({
-      next: (templates) => {
-        this.fieldTemplates = templates;
-      },
-      error: (err) => {
-        console.error('Failed to load templates:', err);
-      }
-    });
-  }
+  this.formDataService.getTemplates().subscribe({
+    next: (templates) => {
+      this.fieldTemplates = templates;
+
+      this.fieldPalette = Object.entries(templates).map(
+        ([type, config]: any) => ({
+          type,
+          label: config.label || type,
+        })
+      );
+    },
+    error: (err) => {
+      console.error('Failed to load templates:', err);
+    }
+  });
+}
+
   
 toggleForm(field: any, action: 'open' | 'close') {
   if (action === 'open') {
@@ -116,8 +138,13 @@ fields = [
 
 
 
- onDropInRow(event: CdkDragDrop<any>) {
-    const draggedField = event.item.data;
+ onDropInRow(event: CdkDragDrop<FormField[]>) {
+  // If dropped inside the same list (reordering)
+  if (event.previousContainer === event.container) {
+    moveItemInArray(this.formFields, event.previousIndex, event.currentIndex);
+  } else {
+    // Dragged from sidebar palette (empty array) to formFields list
+    const draggedField = event.previousContainer.data[event.previousIndex];
     if (!draggedField?.type) return;
 
     const template = this.fieldTemplates[draggedField.type] || {};
@@ -138,8 +165,10 @@ fields = [
       showHtml: false,
     };
 
+    // Insert the newField at the drop index
     this.formFields.splice(event.currentIndex, 0, newField);
   }
+}
 
   
 
@@ -167,7 +196,7 @@ fields = [
   trackByFormField(index: number, item: { id: string }) {
     return item.id;
   }
-editField(fieldId: string) {
+  editField(fieldId: string) {
     if (this.currentEditingFieldId === fieldId) {
       // toggle off if clicking same field again
       this.currentEditingFieldId = null;
@@ -185,6 +214,14 @@ logHtml(ref: any) {
   console.log('Captured HTML:', this.htmlPreview);
 }
 
+//clear button
+clearFormFields() {
+  this.formFields = [];
+  this.selectedField = null;
+  this.jsonOutput = null;
+  this.htmlPreview = null;
+  this.formEditState = {};
+}
 
 
 }

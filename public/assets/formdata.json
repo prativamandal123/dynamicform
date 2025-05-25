@@ -32,5 +32,9 @@
     "autocomplete": "",
     "value": "",
     "defaultConfig": {}
+  },
+  "checkbox": {
+  "label": "Checkbox",
+  "required": false
   }
 }
