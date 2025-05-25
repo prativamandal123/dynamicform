@@ -9,8 +9,7 @@ import { TextFieldComponent } from '../text-field/text-field.component';
 import { faPencil, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FormField } from '../form';
 import { FormDataService } from '../form-data.service';
-
-
+import { CaptureHtmlDirective } from '../capture-html.directive';
 
 
 @Component({
@@ -25,6 +24,7 @@ import { FormDataService } from '../form-data.service';
     HttpClientModule,
     AutocompleteComponent,
     TextFieldComponent,
+    CaptureHtmlDirective
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
@@ -34,14 +34,11 @@ export class HomeComponent {
    faXmark = faXmark;
    showForm = false;
    editedField: any = null; // the field currently being edited
-  currentEditingFieldId: string | null = null;
-formEditState: { [fieldId: string]: boolean } = {}; // Track which fields have open config forms
-
-
-
-    formFields: FormField[] = [];
-    jsonOutput: string | null = null;
-  selectedField: FormField | null = null;
+   currentEditingFieldId: string | null = null;
+   formEditState: { [fieldId: string]: boolean } = {}; // Track which fields have open config forms
+   formFields: FormField[] = [];
+   jsonOutput: string | null = null;
+   selectedField: FormField | null = null;
 
   constructor(private formDataService: FormDataService) {}
 
@@ -178,6 +175,15 @@ editField(fieldId: string) {
       this.currentEditingFieldId = fieldId;
     }
   }
+
+  
+//html button
+htmlPreview: string | null = null;
+
+logHtml(ref: any) {
+  this.htmlPreview = ref.getHtml();
+  console.log('Captured HTML:', this.htmlPreview);
+}
 
 
 
